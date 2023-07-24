@@ -1,0 +1,30 @@
+
+<!--By using this ControlValueAccessor "control" property we can avoid the static and repeated boilerplate codes-->
+<div class="form-floating mb-3">
+    <input 
+    type={{type}}  
+    required
+    placeholder="{{label}}"
+    [formControl]="control"
+    class="form-control"
+    [ngClass]="(control.touched) ? (control.invalid) ? 'is-invalid':'is-valid':null">
+
+    <div *ngIf="control.status==='PENDING'" class="fa fa-spinner fa-spin loader">
+ 
+    </div>
+
+    <label for="floatingInput">{{label}}</label>
+       <!--This "invalid-feedback" bootstrap class was used to show the error message, if its given input is invalid-->
+    <div *ngIf="control.errors?.['required']" class="invalid-feedback">
+        Please enter a {{label}}
+      </div>
+      <div *ngIf="control.errors?.['email']" class="invalid-feedback">
+        Invalid {{label}}
+      </div>
+      <div *ngIf="control.errors?.['pattern']" class="invalid-feedback">
+        {{label}} must have atleast 1 Uppercase, 1 lowercase, 1 number, 1 non-alphanumeric and atleast 6 characters
+      </div>
+      <div *ngIf="control.errors?.['emailExists']" class="invalid-feedback">
+      This {{label}} is already in use.
+      </div>
+    </div>

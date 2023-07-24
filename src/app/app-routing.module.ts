@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { TestErrorComponent } from './core/test-error/test-error.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
+import { ServerErrorComponent } from './core/server-error/server-error.component';
+import { AuthGuard } from './core/guards/auth.guard';
+
+const routes: Routes = [
+  {path:'',component:HomeComponent,data:{breadcrumb:'Home'}},  // This will be used for instead of empty route, we can use this breadcrumb route
+  {path:'not-found',component:NotFoundComponent},
+  {path:'server-error',component:ServerErrorComponent},
+  {path:'test-error',component:TestErrorComponent},
+  {path:'shop',loadChildren:()=> import('./shop/shop.module').then(m=>m.ShopModule)}, // To achieve the lazy loading, we should load this children routes
+  {path:'basket',loadChildren:()=>import('./basket/basket.module').then(m=>m.BasketModule)},
+  {path:'account',loadChildren:()=>import('./account/account.module').then(m=>m.AccountModule)},
+  {path:'checkout',
+  canActivate:[AuthGuard],  // If user was not logged in, then he was redirected into login component page
+  loadChildren:()=>import('./checkout/checkout.module').then(m=>m.CheckoutModule)
+},
+{path:'order',
+canActivate:[AuthGuard], // If user was use "Authorize" attribute in Backend, then we need use this AuthGuard
+loadChildren:()=>import('./order/order.module').then(m=>m.OrderModule)},
+  {path:'**',redirectTo:'',pathMatch:'full'}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

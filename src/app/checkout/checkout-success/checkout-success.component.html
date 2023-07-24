@@ -1,0 +1,8 @@
+<div style="margin-left: 500px;" class="container mt-5">
+    <h2>Thank You ! Your Order was confirmed</h2>
+    <div><i style="color: green; padding-left: 120px; font-size: 300px;" class="fa fa-check-circle fa-5x"></i></div>
+    <p class="mb-2">Your order has not shipped yet, but this is to be expected, Please wait some more time, you will get an update</p>
+    <button *ngIf="order" [routerLink]="['/order',order.id]" routerLinkActive="router-link-active"  style="margin-left: 170px;" class="btn btn-outline-success">View your order</button>
+    <button *ngIf="!order" routerLink="/order" style="margin-left: 170px;" class="btn btn-outline-success">View your orders</button>
+    
+</div>
